@@ -1,41 +1,32 @@
 package com.example.cs4750finalproject.controller;
 
+import com.example.cs4750finalproject.model.Olympic;
 import com.example.cs4750finalproject.repository.OlympicRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import com.example.cs4750finalproject.model.Olympic;
-
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class OlympicController {
 
-
-    //    @Autowired
-    OlympicRepository olympicRepository;
-
+    @Autowired
+    private OlympicRepository olympicRepository;
 
     // GET all Olympics
     @GetMapping("/olympics")
     public ResponseEntity<List<Olympic>> getAllOlympics() {
         try {
-            List<Olympic> olympics = new ArrayList<>();
-            olympicRepository.findAll().forEach(olympic -> olympics.add((Olympic) olympic));
-
-
-
+            List<Olympic> olympics = olympicRepository.findAll(); // Now directly returns List<Olympic>
 
             if (olympics.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
 
             return new ResponseEntity<>(olympics, HttpStatus.OK);
         } catch (Exception e) {
@@ -43,20 +34,13 @@ public class OlympicController {
         }
     }
 
-
     // GET Olympic by year
     @GetMapping("/olympics/{year}")
     public ResponseEntity<Olympic> getOlympicByYear(@PathVariable("year") int year) {
         Optional<Olympic> olympicData = olympicRepository.findById(year);
-
-
-        if (olympicData.isPresent()) {
-            return new ResponseEntity<>(olympicData.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return olympicData.map(olympic -> new ResponseEntity<>(olympic, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
 
     // POST new Olympic
     @PostMapping("/olympics")
@@ -69,13 +53,10 @@ public class OlympicController {
         }
     }
 
-
     // PUT update Olympic
     @PutMapping("/olympics/{year}")
     public ResponseEntity<Olympic> updateOlympic(@PathVariable("year") int year, @RequestBody Olympic olympic) {
         Optional<Olympic> olympicData = olympicRepository.findById(year);
-
-
         if (olympicData.isPresent()) {
             Olympic _olympic = olympicData.get();
             _olympic.setLocation(olympic.getLocation());
@@ -84,7 +65,6 @@ public class OlympicController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 
     // DELETE Olympic by year
     @DeleteMapping("/olympics/{year}")
@@ -96,7 +76,6 @@ public class OlympicController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     // DELETE all Olympics
     @DeleteMapping("/olympics")

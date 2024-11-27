@@ -6,18 +6,5 @@ import com.example.cs4750finalproject.model.Olympic;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface OlympicRepository {
-    Iterable<Object> findAll();
-
-
-    Optional<Olympic> findById(int year);
-
-
-    Olympic save(Olympic olympic);
-
-
-    void deleteById(int year);
-
-
-    void deleteAll();
+public interface OlympicRepository extends JpaRepository<Olympic, Integer> {
 }
