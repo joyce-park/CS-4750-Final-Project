@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +19,17 @@ public class OlympicController {
     @Autowired
     private OlympicRepository olympicRepository;
 
-    // GET all Olympics
+    // GET all Olympics or search by location
     @GetMapping("/olympics")
-    public ResponseEntity<List<Olympic>> getAllOlympics() {
+    public ResponseEntity<List<Olympic>> getAllOlympics(@RequestParam(required = false) String location) {
         try {
-            List<Olympic> olympics = olympicRepository.findAll(); // Now directly returns List<Olympic>
+            List<Olympic> olympics = new ArrayList<>();
+
+            if (location == null) {
+                olympicRepository.findAll().forEach(olympics::add);
+            } else {
+                olympicRepository.findByLocationContaining(location).forEach(olympics::add);
+            }
 
             if (olympics.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
