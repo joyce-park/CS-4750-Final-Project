@@ -54,4 +54,39 @@ public class PlayerController {
     public List<Player> getPlayersWithGoldMedalsGreaterThan(@PathVariable int minGoldMedals) {
         return playerRepository.findByTotalPlayerGoldMedalsGreaterThan(minGoldMedals);
     }
+
+    // Update an existing player
+    @PutMapping("/{id}")
+    public ResponseEntity<Player> updatePlayer(@PathVariable int id, @RequestBody Player playerDetails) {
+        Optional<Player> playerOptional = playerRepository.findById(id);
+
+        if (playerOptional.isPresent()) {
+            Player player = playerOptional.get();
+            player.setFirstName(playerDetails.getFirstName());
+            player.setLastName(playerDetails.getLastName());
+            player.setYear(playerDetails.getYear());
+            player.setSportName(playerDetails.getSportName());
+            player.setCountryCode(playerDetails.getCountryCode());
+            player.setTotalPlayerGoldMedals(playerDetails.getTotalPlayerGoldMedals());
+            player.setGender(playerDetails.getGender());
+
+            Player updatedPlayer = playerRepository.save(player);
+            return ResponseEntity.ok(updatedPlayer);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    // Delete a player
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePlayer(@PathVariable int id) {
+        Optional<Player> playerOptional = playerRepository.findById(id);
+
+        if (playerOptional.isPresent()) {
+            playerRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }
