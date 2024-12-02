@@ -19,7 +19,7 @@ public class CountryController {
     @Autowired
     private CountryRepository countryRepository;
 
-    // GET all countries or search by name
+    // GET api endpoints:
     @GetMapping("/countries")
     public ResponseEntity<List<Country>> getAllCountries(@RequestParam(required = false) String countryName) {
         try {
@@ -41,7 +41,6 @@ public class CountryController {
         }
     }
 
-    // GET a country by code
     @GetMapping("/countries/{countryCode}")
     public ResponseEntity<Country> getCountryByCode(@PathVariable("countryCode") String countryCode) {
         Optional<Country> countryData = countryRepository.findById(countryCode);
@@ -50,7 +49,7 @@ public class CountryController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // POST a new country
+    // POST api endpoint:
     @PostMapping("/countries")
     public ResponseEntity<Country> createCountry(@RequestBody Country country) {
         try {
@@ -65,7 +64,7 @@ public class CountryController {
         }
     }
 
-    // PUT update a country
+    // PUT api endpoint:
     @PutMapping("/countries/{countryCode}")
     public ResponseEntity<Country> updateCountry(@PathVariable("countryCode") String countryCode, @RequestBody Country country) {
         Optional<Country> countryData = countryRepository.findById(countryCode);
@@ -81,7 +80,7 @@ public class CountryController {
         }
     }
 
-    // DELETE a country by code
+    // DELETE api endpoints:
     @DeleteMapping("/countries/{countryCode}")
     public ResponseEntity<HttpStatus> deleteCountry(@PathVariable("countryCode") String countryCode) {
         try {
@@ -92,7 +91,6 @@ public class CountryController {
         }
     }
 
-    // DELETE all countries
     @DeleteMapping("/countries")
     public ResponseEntity<HttpStatus> deleteAllCountries() {
         try {
@@ -103,7 +101,7 @@ public class CountryController {
         }
     }
 
-    // GET countries by year
+    // GET api endpoints:
     @GetMapping("/countries/year/{year}")
     public ResponseEntity<List<Country>> getCountriesByYear(@PathVariable("year") int year) {
         try {
@@ -119,7 +117,6 @@ public class CountryController {
         }
     }
 
-    // GET countries with totalCountryMedals greater than a specified value
     @GetMapping("/countries/medals/greater-than/{minMedals}")
     public ResponseEntity<List<Country>> getCountriesWithMedalsGreaterThan(@PathVariable("minMedals") int minMedals) {
         try {

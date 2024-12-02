@@ -20,7 +20,7 @@ public class SportController {
     @Autowired
     private SportRepository sportRepository;
 
-    // GET all sports or search by sport name, gender, or year
+    // GET api endpoints:
     @GetMapping("/sports")
     public ResponseEntity<List<Sport>> getAllSports(@RequestParam(required = false) String sportName,
                                                     @RequestParam(required = false) String gender,
@@ -49,7 +49,6 @@ public class SportController {
         }
     }
 
-    // GET Sport by sportName and gender
     @GetMapping("/sports/{sportName}/{gender}")
     public ResponseEntity<Sport> getSportBySportNameAndGender(@PathVariable("sportName") String sportName,
                                                               @PathVariable("gender") String gender) {
@@ -59,7 +58,7 @@ public class SportController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // POST new Sport
+    // POST api endpoints:
     @PostMapping("/sports")
     public ResponseEntity<Sport> createSport(@RequestBody Sport sport) {
         try {
@@ -71,7 +70,7 @@ public class SportController {
         }
     }
 
-    // PUT update Sport
+    // PUT api endpoints:
     @PutMapping("/sports/{sportName}/{gender}")
     public ResponseEntity<Sport> updateSport(@PathVariable("sportName") String sportName,
                                              @PathVariable("gender") String gender, @RequestBody Sport sport) {
@@ -87,7 +86,7 @@ public class SportController {
         }
     }
 
-    // DELETE Sport by sportName and gender
+    // DELETE api endpoints:
     @DeleteMapping("/sports/{sportName}/{gender}")
     public ResponseEntity<HttpStatus> deleteSport(@PathVariable("sportName") String sportName,
                                                   @PathVariable("gender") String gender) {
@@ -100,7 +99,7 @@ public class SportController {
         }
     }
 
-    // DELETE all Sports
+    // DELETE api endpoints:
     @DeleteMapping("/sports")
     public ResponseEntity<HttpStatus> deleteAllSports() {
         try {

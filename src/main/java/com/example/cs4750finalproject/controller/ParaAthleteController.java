@@ -17,13 +17,12 @@ public class ParaAthleteController {
     @Autowired
     private ParaAthleteRepository paraAthleteRepository;
 
-    // Get all para athletes
+    // GET api endpoints:
     @GetMapping("/paraathletes")
     public List<ParaAthlete> getAllParaAthletes() {
         return paraAthleteRepository.findAll();
     }
 
-    // Get para athlete by ID
     @GetMapping("/paraathletes/{id}")
     public ResponseEntity<ParaAthlete> getParaAthleteById(@PathVariable int id) {
         Optional<ParaAthlete> paraAthlete = paraAthleteRepository.findById(id);
@@ -31,26 +30,16 @@ public class ParaAthleteController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // Add a new para athlete
-    @PostMapping("/paraathletes")
-    public ResponseEntity<ParaAthlete> addParaAthlete(@RequestBody ParaAthlete paraAthlete) {
-        ParaAthlete savedParaAthlete = paraAthleteRepository.save(paraAthlete);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedParaAthlete);
-    }
-
-    // Find para athletes by disability
     @GetMapping("/paraathletes/disability/{disability}")
     public List<ParaAthlete> getParaAthletesByDisability(@PathVariable String disability) {
         return paraAthleteRepository.findByDisability(disability);
     }
 
-    // Find para athletes by equipment
     @GetMapping("/paraathletes/equipment/{equipment}")
     public List<ParaAthlete> getParaAthletesByEquipment(@PathVariable String equipment) {
         return paraAthleteRepository.findByEquipment(equipment);
     }
 
-    // Find para athletes by both disability and equipment
     @GetMapping("/paraathletes/disability/{disability}/equipment/{equipment}")
     public List<ParaAthlete> getParaAthletesByDisabilityAndEquipment(
             @PathVariable String disability,
@@ -58,7 +47,14 @@ public class ParaAthleteController {
         return paraAthleteRepository.findByDisabilityAndEquipment(disability, equipment);
     }
 
-    // Update an existing para athlete
+    // ADD api endpoint:
+    @PostMapping("/paraathletes")
+    public ResponseEntity<ParaAthlete> addParaAthlete(@RequestBody ParaAthlete paraAthlete) {
+        ParaAthlete savedParaAthlete = paraAthleteRepository.save(paraAthlete);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedParaAthlete);
+    }
+
+    // PUT api endpoint:
     @PutMapping("/paraathletes/{id}")
     public ResponseEntity<ParaAthlete> updateParaAthlete(@PathVariable int id, @RequestBody ParaAthlete paraAthleteDetails) {
         Optional<ParaAthlete> paraAthleteOptional = paraAthleteRepository.findById(id);
@@ -75,7 +71,7 @@ public class ParaAthleteController {
         }
     }
 
-    // Delete a para athlete
+    // DELETE api endpoints:
     @DeleteMapping("/paraathletes/{id}")
     public ResponseEntity<Void> deleteParaAthlete(@PathVariable int id) {
         Optional<ParaAthlete> paraAthleteOptional = paraAthleteRepository.findById(id);

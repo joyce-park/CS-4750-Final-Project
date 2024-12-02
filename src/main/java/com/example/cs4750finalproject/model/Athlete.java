@@ -51,12 +51,4 @@ public class Athlete {
         this.weight = weight;
     }
 
-    @Override
-    public String toString() {
-        return "Athlete{" +
-                "playerId=" + playerId +
-                ", height=" + height +
-                ", weight=" + weight +
-                '}';
-    }
 }

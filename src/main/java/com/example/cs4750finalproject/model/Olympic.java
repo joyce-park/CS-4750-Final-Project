@@ -30,8 +30,4 @@ public class Olympic {
         this.location = location;
     }
 
-    @Override
-    public String toString(){
-        return "Olympic:" + "year=" + year + ", location=" + location;
-    }
 }

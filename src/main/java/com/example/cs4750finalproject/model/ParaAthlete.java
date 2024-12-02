@@ -50,12 +50,4 @@ public class ParaAthlete {
         this.equipment = equipment;
     }
 
-    @Override
-    public String toString() {
-        return "ParaAthlete{" +
-                "playerId=" + playerId +
-                ", disability='" + disability + '\'' +
-                ", equipment='" + equipment + '\'' +
-                '}';
-    }
 }

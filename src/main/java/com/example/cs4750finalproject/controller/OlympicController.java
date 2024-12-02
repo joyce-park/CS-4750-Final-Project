@@ -19,7 +19,7 @@ public class OlympicController {
     @Autowired
     private OlympicRepository olympicRepository;
 
-    // GET all Olympics or search by location
+    // GET api endpoints:
     @GetMapping("/olympics")
     public ResponseEntity<List<Olympic>> getAllOlympics(@RequestParam(required = false) String location) {
         try {
@@ -41,7 +41,6 @@ public class OlympicController {
         }
     }
 
-    // GET Olympic by year
     @GetMapping("/olympics/{year}")
     public ResponseEntity<Olympic> getOlympicByYear(@PathVariable("year") int year) {
         Optional<Olympic> olympicData = olympicRepository.findById(year);
@@ -49,7 +48,7 @@ public class OlympicController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // POST new Olympic
+    // POST api endpoint:
     @PostMapping("/olympics")
     public ResponseEntity<Olympic> createOlympic(@RequestBody Olympic olympic) {
         try {
@@ -60,7 +59,7 @@ public class OlympicController {
         }
     }
 
-    // PUT update Olympic
+    // PUT api endpoint:
     @PutMapping("/olympics/{year}")
     public ResponseEntity<Olympic> updateOlympic(@PathVariable("year") int year, @RequestBody Olympic olympic) {
         Optional<Olympic> olympicData = olympicRepository.findById(year);
@@ -73,7 +72,7 @@ public class OlympicController {
         }
     }
 
-    // DELETE Olympic by year
+    // DELETE api endpoints:
     @DeleteMapping("/olympics/{year}")
     public ResponseEntity<HttpStatus> deleteOlympic(@PathVariable("year") int year) {
         try {
@@ -84,7 +83,6 @@ public class OlympicController {
         }
     }
 
-    // DELETE all Olympics
     @DeleteMapping("/olympics")
     public ResponseEntity<HttpStatus> deleteAllOlympics() {
         try {

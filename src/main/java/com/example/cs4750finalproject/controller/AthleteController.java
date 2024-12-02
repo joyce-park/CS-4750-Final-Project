@@ -23,7 +23,7 @@ public class AthleteController {
     @Autowired
     private AthleteRepository athleteRepository;
 
-    // GET all Athletes or search by height
+    // GET API endpoints for athletes:
     @GetMapping("/athletes")
     public ResponseEntity<List<Athlete>> getAllAthletes(@RequestParam(required = false) Float height) {
         try {
@@ -49,7 +49,6 @@ public class AthleteController {
         }
     }
 
-    // GET Athlete by playerId
     @GetMapping("/athletes/{playerId}")
     public ResponseEntity<Athlete> getAthleteByPlayerId(@PathVariable("playerId") int playerId) {
         try {
@@ -67,7 +66,7 @@ public class AthleteController {
         }
     }
 
-    // POST new Athlete
+    // POST api endpoint:
     @PostMapping("/athletes")
     public ResponseEntity<Athlete> createAthlete(@RequestBody Athlete athlete) {
         try {
@@ -80,7 +79,7 @@ public class AthleteController {
         }
     }
 
-    // PUT update Athlete
+    // PUT api endpoint:
     @PutMapping("/athletes/{playerId}")
     public ResponseEntity<Athlete> updateAthlete(@PathVariable("playerId") int playerId, @RequestBody Athlete athlete) {
         try {
@@ -101,7 +100,7 @@ public class AthleteController {
         }
     }
 
-    // DELETE Athlete by playerId
+    // DELETE api endpoints:
     @DeleteMapping("/athletes/{playerId}")
     public ResponseEntity<HttpStatus> deleteAthlete(@PathVariable("playerId") int playerId) {
         try {
@@ -119,7 +118,6 @@ public class AthleteController {
         }
     }
 
-    // DELETE all Athletes
     @DeleteMapping("/athletes")
     public ResponseEntity<HttpStatus> deleteAllAthletes() {
         try {

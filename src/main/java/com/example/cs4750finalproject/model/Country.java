@@ -55,9 +55,4 @@ public class Country {
         this.totalCountryMedals = totalCountryMedals;
     }
 
-    // Override toString method
-    @Override
-    public String toString() {
-        return "Country:" + "countryCode='" + countryCode + ", countryName='" + countryName + ", year=" + year + ", totalCountryMedals=" + totalCountryMedals;
-    }
 }

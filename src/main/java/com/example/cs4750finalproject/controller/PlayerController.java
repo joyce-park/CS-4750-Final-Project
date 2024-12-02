@@ -17,45 +17,41 @@ public class PlayerController {
     @Autowired
     private PlayerRepository playerRepository;
 
-    // Get all players
+    // GET api endpoints:
     @GetMapping
     public List<Player> getAllPlayers() {
         return playerRepository.findAll();
     }
 
-    // Get player by ID
     @GetMapping("/{id}")
     public ResponseEntity<Player> getPlayerById(@PathVariable int id) {
         Optional<Player> player = playerRepository.findById(id);
         return player.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // Add a new player
+    @GetMapping("/sport/{sportName}")
+    public List<Player> getPlayersBySport(@PathVariable String sportName) {
+        return playerRepository.findBySportName(sportName);
+    }
+
+    @GetMapping("/country/{countryCode}")
+    public List<Player> getPlayersByCountryCode(@PathVariable String countryCode) {
+        return playerRepository.findByCountryCode(countryCode);
+    }
+
+    @GetMapping("/gold-medals/greater-than/{minGoldMedals}")
+    public List<Player> getPlayersWithGoldMedalsGreaterThan(@PathVariable int minGoldMedals) {
+        return playerRepository.findByTotalPlayerGoldMedalsGreaterThan(minGoldMedals);
+    }
+
+    // POST api endpoints:
     @PostMapping
     public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
         Player savedPlayer = playerRepository.save(player);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPlayer);
     }
 
-    // Find players by sport name
-    @GetMapping("/sport/{sportName}")
-    public List<Player> getPlayersBySport(@PathVariable String sportName) {
-        return playerRepository.findBySportName(sportName);
-    }
-
-    // Find players by country code
-    @GetMapping("/country/{countryCode}")
-    public List<Player> getPlayersByCountryCode(@PathVariable String countryCode) {
-        return playerRepository.findByCountryCode(countryCode);
-    }
-
-    // Find players with gold medals greater than the specified number
-    @GetMapping("/gold-medals/greater-than/{minGoldMedals}")
-    public List<Player> getPlayersWithGoldMedalsGreaterThan(@PathVariable int minGoldMedals) {
-        return playerRepository.findByTotalPlayerGoldMedalsGreaterThan(minGoldMedals);
-    }
-
-    // Update an existing player
+    // PUT api endpoints:
     @PutMapping("/{id}")
     public ResponseEntity<Player> updatePlayer(@PathVariable int id, @RequestBody Player playerDetails) {
         Optional<Player> playerOptional = playerRepository.findById(id);
@@ -77,7 +73,7 @@ public class PlayerController {
         }
     }
 
-    // Delete a player
+    // DELETE api endpoints:
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePlayer(@PathVariable int id) {
         Optional<Player> playerOptional = playerRepository.findById(id);

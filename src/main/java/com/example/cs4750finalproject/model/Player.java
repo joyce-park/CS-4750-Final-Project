@@ -110,17 +110,4 @@ public class Player {
         this.gender = gender;
     }
 
-    @Override
-    public String toString() {
-        return "Player{" +
-                "playerId=" + playerId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", year=" + year +
-                ", sportName='" + sportName + '\'' +
-                ", countryCode='" + countryCode + '\'' +
-                ", totalPlayerGoldMedals=" + totalPlayerGoldMedals +
-                ", gender='" + gender + '\'' +
-                '}';
-    }
 }

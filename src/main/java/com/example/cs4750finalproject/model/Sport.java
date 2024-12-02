@@ -69,14 +69,4 @@ public class Sport {
         this.countryName = countryName;
     }
 
-    @Override
-    public String toString() {
-        return "Sport{" +
-                "sportName='" + sportName + '\'' +
-                ", gender='" + gender + '\'' +
-                ", year=" + year +
-                ", totalSportGoldMedals=" + totalSportGoldMedals +
-                ", countryName='" + countryName + '\'' +
-                '}';
-    }
 }
